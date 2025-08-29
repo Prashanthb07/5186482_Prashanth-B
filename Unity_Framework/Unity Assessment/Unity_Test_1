@@ -1,0 +1,80 @@
+//main.c
+
+#include "stdio.h"
+#include "demo.h"
+#include "unity.h"
+
+void setUp(){
+    printf("Before going into test case\n");
+    printf("------------------------------\n");
+}
+void tearDown (){
+    printf("After completing the test case\n");
+    printf("------------------------------\n");
+}
+void test_sum(){
+    TEST_ASSERT_EQUAL(5,sum(2,3));
+    TEST_ASSERT_EQUAL(6,sum(3,3));
+}
+void test_square(){
+    TEST_ASSERT_EQUAL(9,square(3));
+    TEST_ASSERT_EQUAL(4,square(2));
+}
+
+
+
+int main(){
+    int a=10,b=15,c=0;
+    c=sum(a,b);
+    printf("The sum of two number is %d\n",c);
+    c=square(a);
+    printf("the square of the number is %d\n",c);
+
+
+    UNITY_BEGIN();
+    RUN_TEST(test_sum);
+    RUN_TEST(test_square);
+
+    return UNITY_END();
+}
+
+
+//sum.c
+
+#include "demo.h"
+int sum(int a, int b){
+    return a+b;
+}
+
+
+//square.c
+
+#include "demo.h"
+int square(int a){
+    return a*a;
+}
+
+
+//demo.h
+
+#ifndef __DEMO__H
+#define __DEMO__H
+
+int sum(int a, int b);
+int square(int a);
+#endif
+
+
+//Makefile
+
+SRC = main.c sum.c squate.c unity.h
+OBJ = main.o sum.o squate.o unity.o
+
+object.o: $(SRC)
+	gcc $^ -c
+
+all: $(OBJ)
+	gcc $^ -o all.exe
+
+run: all
+	./all.exe
